@@ -1,13 +1,12 @@
 import os
 from pymongo import MongoClient
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
-MONGODB_URI = os.getenv("MONGODB_URI")
-DB_NAME = os.getenv("MONGODB_DB_NAME")
+MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
+DB_NAME = os.getenv("MONGODB_DB_NAME", "news_aggregator")
 
 def get_db():
     client = MongoClient(MONGODB_URI)
-    db = client[DB_NAME]
-    return db
+    return client[DB_NAME]
